@@ -21,21 +21,7 @@ public class Alumno {
 		this.apellido = apellido;
 	}
 	
-	public void calificar(String codigoMateria, double calificacion){
-		
-		Materia materiaAlumno = buscarMateria(codigoMateria);
-		if (materiaAlumno != null ){
-		
-			if (materiaAlumno.getCodigo().equals(materiaAlumno.getCodigo())){
-				Nota nota = new Nota(materiaAlumno, calificacion);
-				this.nota.add(nota);
-			}
-			
-		
-		}
-		
-		
-	}
+	
 	
 	
 	public Materia buscarMateria(String codigoMateria){
@@ -57,6 +43,31 @@ public class Alumno {
 		}
 		
 	}
+	
+    public Materia buscarMateriaEstudiante(String codigoMateria){
+        Materia m;
+            ArrayList<Materia> materia = this.materias;
+            for (int i = 0; i < materia.size(); i++) {
+                m = materia.get(i);
+                if(m.getCodigo().equals(codigoMateria)){
+                    return m;
+                }
+                
+            }
+            return null;
+    }
+    
+            
+    public void calificar(String codigoMateria, int calificacion){
+        Materia materiaEstudiante = buscarMateriaEstudiante(codigoMateria);
+        if(materiaEstudiante != null){
+            if(materiaEstudiante.getCodigo().equals(codigoMateria)){
+                Nota n = new Nota(materiaEstudiante,calificacion);
+                this.nota.add(n);
+            }
+        }
+        
+    }
 
 	public String getCedula() {
 		return cedula;

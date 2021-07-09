@@ -17,15 +17,17 @@ public class TestAsignarMateria {
 		centroEducativo.matricular(new Alumno("1714616123", "Roberto", "Gomez"));
 		centroEducativo.matricular(new Alumno("1714616108", "Martina", "Rosales"));
 		centroEducativo.matricular(new Alumno("1714616147", "Bertha", "Cabral"));
+		centroEducativo.matricular(new Alumno("1714616100", "Bertha", "Cabral"));
 		
 
 		centroEducativo.asignarMateria("CEC", "1714616147");
 		centroEducativo.asignarMateria("CEC", "1714616123");
 		centroEducativo.asignarMateria("CEC", "1714616108");
+		centroEducativo.asignarMateria("CEC", "1714616100");
 		
 		centroEducativo.asignarMateria("HSO", "1714616147");
 		
-		centroEducativo.asignarMateria("MAT", "1714616147");
+		centroEducativo.asignarMateria("MAT", "1714616");
 		
 		centroEducativo.listarMaterias();
 		
