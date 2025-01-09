@@ -30,7 +30,7 @@ public class TestCalificar {
 		centroEducativo.calificar("CEC", "1714616147", 0);
 		
 		
-		Alumno alumno=centroEducativo.buscar("1714616147");
+		Alumno alumno=centroEducativo.buscarAlumno("1714616147");
 		System.out.println("Notas ingresadas al alumno:"+alumno.getNotas().size());
 
 	}

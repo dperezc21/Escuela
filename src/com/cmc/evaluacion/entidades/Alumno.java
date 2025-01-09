@@ -21,50 +21,24 @@ public class Alumno {
 		this.apellido = apellido;
 	}
 	
-	
-	
-	
 	public Materia buscarMateria(String codigoMateria){
-		Materia m; 
-		for (int i = 0; i < this.materias.size(); i++) {
-			m = this.materias.get(i);
-			if(m.getCodigo().equals(codigoMateria)){
-				return m;
-			}
-		}
-		return null;
+		return this.materias.stream()
+				.filter(t -> t.getCodigo().equals(codigoMateria)).findFirst().orElse(null);
 	}
 	
 	
 	public void agregarMateria(Materia materia){
 		Materia m = buscarMateria(materia.getCodigo());
-		if(m == null){
-			this.materias.add(materia);
-		}
+		if(m == null) this.materias.add(materia);
 		
 	}
-	
-    public Materia buscarMateriaEstudiante(String codigoMateria){
-        Materia m;
-            ArrayList<Materia> materia = this.materias;
-            for (int i = 0; i < materia.size(); i++) {
-                m = materia.get(i);
-                if(m.getCodigo().equals(codigoMateria)){
-                    return m;
-                }
-                
-            }
-            return null;
-    }
     
             
     public void calificar(String codigoMateria, int calificacion){
-        Materia materiaEstudiante = buscarMateriaEstudiante(codigoMateria);
-        if(materiaEstudiante != null){
-            if(materiaEstudiante.getCodigo().equals(codigoMateria)){
-                Nota n = new Nota(materiaEstudiante,calificacion);
-                this.nota.add(n);
-            }
+        Materia materiaEstudiante = buscarMateria(codigoMateria);
+        if(materiaEstudiante != null && materiaEstudiante.getCodigo().equals(codigoMateria)) {
+            Nota n = new Nota(materiaEstudiante,calificacion);
+            this.nota.add(n);
         }
         
     }
@@ -106,8 +80,5 @@ public class Alumno {
 	public void setNota(ArrayList<Nota> nota) {
 		this.nota = nota;
 	}
-	
-	
-	
 	
 }

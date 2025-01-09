@@ -31,7 +31,7 @@ public class TestAsignarMateria {
 		
 		centroEducativo.listarMaterias();
 		
-		Alumno alumno=centroEducativo.buscar("1714616147");
+		Alumno alumno=centroEducativo.buscarAlumno("1714616147");
 		ArrayList<Materia> materias=alumno.getMaterias();
 		System.out.println("Materias del alumno 1714616147:"+materias.size());
 

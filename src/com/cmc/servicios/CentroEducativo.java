@@ -20,44 +20,21 @@ public class CentroEducativo {
 		return this.alumnos.size();
 	}
 
-	public Alumno buscar(String cedulaAlumno) {
-		Alumno a;
-		if (this.alumnos.size() == 0) {
-			return null;
-		} else {
-			for (int i = 0; i < this.alumnos.size(); i++) {
-				a = this.alumnos.get(i);
-				if (a.getCedula().equals(cedulaAlumno)) {
-					return a;
-				}
-
-			}
-		}
-
-		return null;
+	public Alumno buscarAlumno(String cedulaAlumno) {
+		if (this.alumnos.size() == 0) return null;
+		return this.alumnos.stream().filter(alumno -> alumno.getCedula().equals(cedulaAlumno)).findFirst().orElse(null);
 	}
 
 	public boolean matricular(Alumno alumno) {
-		Alumno alumnoEncontrado = buscar(alumno.getCedula());
-
-		if (alumnoEncontrado == null) {
-			this.alumnos.add(alumno);
-			return true;
-		} else {
-			if (alumnoEncontrado.getCedula().equals(alumno.getCedula())) {
-
-				System.out.println("no se puede matricular un alumno con la misma cedula.");
-				return false;
-
-			}
-
-		}
+		Alumno alumnoEncontrado = buscarAlumno(alumno.getCedula());
+		if(alumnoEncontrado != null) return false;
+		
+		this.alumnos.add(alumno);
 		return true;
-
 	}
 
 	public void actualizarInformacion(Alumno alumno) {
-		Alumno buscarAlumno = buscar(alumno.getCedula());
+		Alumno buscarAlumno = buscarAlumno(alumno.getCedula());
 
 		if (buscarAlumno != null) {
 			buscarAlumno.setNombre(alumno.getNombre());
@@ -75,17 +52,12 @@ public class CentroEducativo {
 
 	public String generarCodigo(String nombreMateria) {
 		String codigo = "";
-		if (nombreMateria.length() > 2) {
-			if (nombreMateria.length() > 5 || nombreMateria.length() == 5) {
-				codigo = nombreMateria.substring(0, 1) + nombreMateria.substring(2, 3) + nombreMateria.substring(4, 5);
-			} else {
-				if (nombreMateria.length() < 5) {
-					codigo = nombreMateria.substring(0, 3);
-				}
-			}
-		} else {
-			return null;
-		}
+		if(nombreMateria.length() < 2) return null;
+		
+		if (nombreMateria.length() >= 5) {
+			codigo = nombreMateria.substring(0, 1) + nombreMateria.substring(2, 3) + nombreMateria.substring(4, 5);
+		} else codigo = nombreMateria.substring(0, 3);
+		
 		return codigo;
 
 	}
@@ -111,7 +83,7 @@ public class CentroEducativo {
 
 	public void asignarMateria(String codigoMateria, String cedulaAlumno) {
 
-		Alumno alumnoEncontrado = buscar(cedulaAlumno);
+		Alumno alumnoEncontrado = buscarAlumno(cedulaAlumno);
 		Materia materia = buscarMateria(codigoMateria);
 
 		if (alumnoEncontrado != null && materia != null) {
@@ -129,7 +101,7 @@ public class CentroEducativo {
 	public void calificar(String codigoMateria, String cedulaAlumno, int calificacion) {
 
 		if (calificacion >= 0 && calificacion <= 10) {
-			Alumno alumno = buscar(cedulaAlumno);
+			Alumno alumno = buscarAlumno(cedulaAlumno);
 			alumno.calificar(codigoMateria, calificacion);
 		} else {
 			System.out.println("Nota fuera de rango.");
@@ -139,7 +111,7 @@ public class CentroEducativo {
 
 	public ArrayList<Nota> obtenerNotasMateria(String cedulaAlumno, String codigoMateria) {
 		ArrayList<Nota> notas = new ArrayList<Nota>();
-		Alumno alumno = buscar(cedulaAlumno);
+		Alumno alumno = buscarAlumno(cedulaAlumno);
 		// Materia materia = alumno.buscarMateria(codigoMateria);
 
 		for (int i = 0; i < alumno.getNotas().size(); i++) {
